@@ -1,0 +1,299 @@
+{% extends "my_template.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+<!-- <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'> -->
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
+<!-- <link href="./jquery.multiselect.css" rel="stylesheet" /> -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.multiselect.css') }}" type="text/css">
+<!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/prettify.css') }}" type="text/css"> -->
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<style>
+  @media screen and (min-width: 768px) {
+    form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+ 
+    form div,
+    .input-holder {
+        width: 100%;
+    }
+ 
+    /* replace "1" with the number of the first field that you want to align horizontally */
+    .form>*:nth-child(1), .input-holder:nth-of-type(1),
+    /* replace "2" with the number of the second field that you want to align horizontally */
+    .form>*:nth-child(2), .input-holder:nth-of-type(2) {
+        width: 47%;
+    }
+  }
+  div {
+    margin: 10px 20px 10px 20px;
+  }
+  p {
+    margin: 30px 0 0 0;
+    padding: 0;
+  }
+  td {
+    text-align: center;
+  }
+  button {
+    margin: 0 10px;
+  }
+
+  label.control-label {
+    width: 100px;
+  }
+
+  #id {
+    display: none;
+  }
+
+  
+  
+</style>
+
+  <div class="container">
+    <h1 style="text-align: center;">
+      {% if user %}
+          Edit User
+        {% else %}
+          Add User
+        {% endif %}      
+    </h1>
+    <form action="" method="post" class="form" role="form">
+      {{ form.csrf_token() }}
+      <input type="hidden" name="type_" value="save">
+      <div class="form-inline" style="display: none;">
+        {% if user %}
+          {{ wtf.form_field(form.id, class='form-control', value=user.id) }}
+        {% else %}
+          {{ wtf.form_field(form.id, class='form-control')}}
+        {% endif %}
+      </div>
+
+      <div class="form-inline">
+        {% if user %}
+          {{ wtf.form_field(form.name, class='form-control', placeholder='user name', value=user.name) }}
+        {% else %}
+          {{ wtf.form_field(form.name, class='form-control', placeholder='user name') }}
+        {% endif %}
+      </div>
+      <div class="form-inline">
+        {% if user %}
+          {{ wtf.form_field(form.username, class='form-control', placeholder='username for login', value=user.username) }}
+        {% else %}
+          {{ wtf.form_field(form.username, class='form-control', placeholder='username for login') }}
+        {% endif %}
+      </div>
+      <div class="form-inline">
+        {% if user %}
+          {{ wtf.form_field(form.password, class='form-control', placeholder='password for login', value=user.password) }}
+        {% else %}
+          {{ wtf.form_field(form.password, class='form-control', placeholder='password for login') }}
+        {% endif %}
+      </div>
+      <div class="form-inline">
+        {% if user %}
+          {{ wtf.form_field(form.email, class='form-control', placeholder='your@email.com', value=user.email) }}
+        {% else %}
+          {{ wtf.form_field(form.email, class='form-control', placeholder='your@email.com') }}
+        {% endif %}        
+      </div>
+      <div class="form-inline">
+        {% if user %}
+          {{ wtf.form_field(form.phone, class='form-control', placeholder='+12126712234', value=user.phone) }}
+        {% else %}
+          {{ wtf.form_field(form.phone, class='form-control', placeholder='+12126712234') }}
+        {% endif %}        
+      </div>
+      <div class="form-inline">
+        {% if user %}
+          {{ wtf.form_field(form.defer, class='form-control', checked=user.defer) }}
+          <script>var defer = "{{user.defer}}";</script>      
+        {% else %}
+          {{ wtf.form_field(form.defer, class='form-control') }}        
+        {% endif %}
+        
+      </div>
+      <div class="form-inline">
+        {% if user %}
+          {{ wtf.form_field(form.test_date, class='form-control') }}      
+          <script>var test_date="{{user.test_date}}";</script>
+        {% else %}
+          {{ wtf.form_field(form.test_date, class='form-control') }}        
+        {% endif %}
+        
+      </div>
+      <div class="form-inline">
+        {% if user %}
+          {{ wtf.form_field(form.profession, class='form-control') }}      
+          <script>var profession="{{user.profession}}";</script>
+        {% else %}
+          {{ wtf.form_field(form.profession, class='form-control') }}        
+        {% endif %}
+        
+      </div>
+      <div class="form-inline">        
+        {{ wtf.form_field(form.country, class='form-control', multiple='multiple') }}
+        <script>var countries = [];</script> 
+        {% if user %}
+          {% for cc in user.country %}
+            <script>countries.push("{{cc}}");</script>
+          {% endfor%}
+        {% endif %} 
+               
+      </div>
+      <div class="form-inline">
+        {{ wtf.form_field(form.locations_, class='form-control', multiple='multiple') }}
+        <script>var locations_2 = [];</script> 
+        {% if user %}
+          {% for cc in user.locations %}
+            <script>locations_2.push("{{cc}}");</script>
+          {% endfor%}
+        {% endif %}  
+      </div>
+      <div class="form-inline">
+        {{ wtf.form_field(form.dates, class='form-control', multiple='multiple') }}
+        <script>var dates_2 = [];</script> 
+        {% if user %}           
+          {% for cc in user.dates %}
+            <script>dates_2.push("{{cc}}");</script>
+          {% endfor%} 
+        {% endif%}      
+      </div>
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+          {% for message in messages %} 
+            <span style="color:#a94442; margin: 20px 0 10px 40px;">{{ message }}</span>
+          {% endfor %}
+      {% endif %}
+    {% endwith %}
+      <p >
+        <div class="form-inline">
+          <button type="button" class="btn btn-success" id="btn_add_row">Add Row</button>
+          <button type="submit" class="btn btn-info">Save</button>
+          <button type="button" class="btn btn-warning" id="btn_go_back">Go Back</button>
+        </div>      
+    </form>
+  </div>
+
+  <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script> -->
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> -->
+
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+<!-- <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script> -->
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
+  
+  <!-- <script src="./jquery.multiselect.js"></script> -->
+
+
+  <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.multiselect.js') }}"></script>
+  <!-- <script type="text/javascript" src="{{ url_for('static', filename='js/prettify.js') }}"></script> -->
+
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
+  
+
+  
+  
+
+  <script type="text/javascript">  
+            
+    $(document).ready(function(){ 
+      $("#defer").prop("checked", defer=="True"?true:false);
+      $(function () {
+        $('#country').multiselect({
+            // columns: 3,
+            placeholder: 'Select Countries',
+            search: true,
+            searchOptions: {
+                'default': 'Search Countries'
+            },
+            selectAll: true
+        });
+
+        $('#locations_').multiselect({
+            // columns: 3,
+            placeholder: 'Select Locations',
+            search: true,
+            searchOptions: {
+                'default': 'Search Locations'
+            },
+            selectAll: true
+        });
+
+        $('#dates').multiselect({
+            // columns: 3,
+            placeholder: 'Select Dates',
+            search: true,
+            searchOptions: {
+                'default': 'Search Dates'
+            },
+            selectAll: true
+        });
+      });
+
+      $("#btn_go_back").on("click", function(){
+        window.location.href = "/";
+      }); 
+
+      $( "#profession > option" ).each(function( index ) {
+        if($( this ).prop("value") == profession) {
+          $("#profession").prop("selectedIndex", index);
+          return false;
+        }
+      });
+
+      $( "#test_date > option" ).each(function( index ) {
+        if($( this ).prop("value") == test_date) {
+          $("#test_date").prop("selectedIndex", index);
+          return false;
+        }
+      });
+
+      $( "#country > option" ).each(function( index ) {
+        for(var i = 0; i < countries.length; i++ ) {
+          if($( this ).prop("value") == countries[i]) {
+            $(this).prop("selected", "selected")
+            break;
+          }
+        }        
+      });
+
+      $( "#locations_ > option" ).each(function( index ) {
+        for(var i = 0; i < locations_2.length; i++ ) {
+          if($( this ).prop("value") == locations_2[i]) {
+            $(this).prop("selected", "selected")
+            locations_2.splice(i,1)
+            break;
+          }
+        }        
+      });
+
+      $( "#dates > option" ).each(function( index ) {
+        for(var i = 0; i < dates_2.length; i++ ) {
+          if($( this ).prop("value") == dates_2[i]) {
+            $(this).prop("selected", "selected")
+            dates_2.splice(i,1)
+            break;
+          }
+        }        
+      });
+      
+      
+    });
+        
+  </script>
+{% endblock %}

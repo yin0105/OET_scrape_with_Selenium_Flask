@@ -1,0 +1,326 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    
+    
+<!-- <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'> -->
+<!-- <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> -->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
+<!-- <link href="./jquery.multiselect.css" rel="stylesheet" /> -->
+<link rel="stylesheet" href="../static/css/jquery.multiselect.css" type="text/css">
+<!-- <link rel="stylesheet" href="/static/css/prettify.css" type="text/css"> -->
+
+
+  function renumber_tbl_location(){ 
+    var index = 0;
+    $(".tr_location").each(function(){
+      $(this).children("td:first").text(++index);        
+    });
+  }
+</script>
+
+
+<style>
+  @media screen and (min-width: 768px) {
+    form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+ 
+    form div,
+    .input-holder {
+        width: 100%;
+    }
+ 
+    /* replace "1" with the number of the first field that you want to align horizontally */
+    .form>*:nth-child(1), .input-holder:nth-of-type(1),
+    /* replace "2" with the number of the second field that you want to align horizontally */
+    .form>*:nth-child(2), .input-holder:nth-of-type(2) {
+        width: 47%;
+    }
+  }
+  div {
+    margin: 10px 20px 10px 20px;
+  }
+  p {
+    margin: 30px 0 0 0;
+    padding: 0;
+  }
+  td {
+    text-align: center;
+  }
+  button {
+    margin: 0 10px;
+  }
+
+  label.control-label {
+    width: 100px;
+  }
+
+  #id {
+    display: none;
+  }
+</style>
+
+  <div class="container">
+    <h1 style="text-align: center;">
+      
+          Add User
+              
+    </h1>
+    <form action="/edit_user/save" method="post" class="form" role="form">
+      <input id="csrf_token" name="csrf_token" type="hidden" value="IjEwMzc4NjY0YTM2NmRhZmYwOTFmNzQxNzQ4MTAzNzU2NGJiZjc2ZDEi.XymPrQ.8m8Kyq7Hs_HD2UHkxUUxwZLY0kU">
+      <div class="form-inline" style="display: none;">
+        
+          
+
+
+
+
+<div class="form-group "><label class="control-label" for="id"> id</label>
+        
+          <input class="form-control" id="id" name="id" type="hidden" value="">
+        
+  </div>
+
+
+        
+      </div>
+
+      <div class="form-inline">
+        
+          
+
+
+
+
+
+
+<div class="form-group  required"><label class="control-label" for="name"> Name :   </label>
+        
+          <input class="form-control" id="name" name="name" placeholder="user name" required type="text" value="">
+        
+  </div>
+
+
+        
+      </div>
+      <div class="form-inline">
+        
+          
+
+
+
+
+
+
+<div class="form-group  required"><label class="control-label" for="username"> User Name :   </label>
+        
+          <input class="form-control" id="username" name="username" placeholder="username for login" required type="text" value="">
+        
+  </div>
+
+
+        
+      </div>
+      <div class="form-inline">
+        
+          
+
+
+
+
+
+
+<div class="form-group  required"><label class="control-label" for="password"> Password :   </label>
+        
+          <input class="form-control" id="password" name="password" placeholder="password for login" required type="text" value="">
+        
+  </div>
+
+
+        
+      </div>
+      <div class="form-inline">
+        
+          
+
+
+
+
+
+
+<div class="form-group  required"><label class="control-label" for="email"> Email :   </label>
+        
+          <input class="form-control" id="email" name="email" placeholder="your@email.com" required type="text" value="">
+        
+  </div>
+
+
+                
+      </div>
+      <!-- <div class="form-inline" style="display: none;">
+        
+          
+
+
+
+
+<div class="form-group "><label class="control-label" for="orig_email">Original Email</label>
+        
+          <input class="form-control" id="orig_email" name="orig_email" type="hidden" value="0">
+        
+  </div>
+
+
+                
+      </div> -->
+      <div class="form-inline">
+        
+          
+
+
+
+
+
+
+<div class="form-group  required"><label class="control-label" for="phone"> Phone :   </label>
+        
+          <input class="form-control" id="phone" name="phone" placeholder="+12126712234" required type="text" value="">
+        
+  </div>
+
+
+                
+      </div>
+      <div class="form-inline">
+        
+
+
+
+
+<div class="form-group "><label class="control-label" for="profession"> Profession : </label>
+        
+          <select class="form-control" id="profession" name="profession"><option value="Dentistry">Dentistry</option><option value="Dietetics">Dietetics</option><option value="Medicine">Medicine</option><option value="Nursing">Nursing</option><option value="Occupational therapy">Occupational therapy</option><option value="Optometry">Optometry</option><option value="Pharmacy">Pharmacy</option><option value="Physiotherapy">Physiotherapy</option><option value="Podiatry">Podiatry</option><option value="Radiography">Radiography</option><option value="Speech pathology">Speech pathology</option><option value="Veterinary science">Veterinary science</option></select>
+        
+  </div>
+
+        
+      </div>
+      <div class="form-inline">
+        
+
+
+
+
+<div class="form-group "><label class="control-label" for="country"> Country : </label>
+        
+          <select class="form-control" id="country" multiple="multiple" name="country"><option value="AFGHANISTAN">AFGHANISTAN</option><option value="UNITED ARAB EMIRATES">UNITED ARAB EMIRATES</option><option value="ARGENTINA">ARGENTINA</option><option value="ARGENTINA">ARGENTINA</option><option value="ARMENIA">ARMENIA</option><option value="AMERICAN SAMOA">AMERICAN SAMOA</option><option value="AUSTRALIA">AUSTRALIA</option><option value="BANGLADESH">BANGLADESH</option><option value="BOLIVIA">BOLIVIA</option><option value="BRAZIL">BRAZIL</option><option value="CANADA">CANADA</option><option value="SWITZERLAND">SWITZERLAND</option><option value="CHILE">CHILE</option><option value="CHINA">CHINA</option><option value="COLOMBIA">COLOMBIA</option><option value="COSTA RICA">COSTA RICA</option><option value="CYPRUS">CYPRUS</option><option value="CZECH REPUBLIC">CZECH REPUBLIC</option><option value="GERMANY">GERMANY</option><option value="DENMARK">DENMARK</option><option value="DOMINICAN REPUBLIC">DOMINICAN REPUBLIC</option><option value="EGYPT">EGYPT</option><option value="SPAIN">SPAIN</option><option value="FINLAND">FINLAND</option><option value="FRANCE">FRANCE</option><option value="UNITED KINGDOM">UNITED KINGDOM</option><option value="GHANA">GHANA</option><option value="GREECE">GREECE</option><option value="GUATEMALA">GUATEMALA</option><option value="GUAM">GUAM</option><option value="HONG KONG">HONG KONG</option><option value="HONG KONG">HONG KONG</option><option value="CROATIA">CROATIA</option><option value="CROATIA">CROATIA</option><option value="HUNGARY">HUNGARY</option><option value="INDONESIA">INDONESIA</option><option value="INDIA">INDIA</option><option value="IRELAND">IRELAND</option><option value="ISRAEL">ISRAEL</option><option value="ITALY">ITALY</option><option value="JORDAN">JORDAN</option><option value="JAPAN">JAPAN</option><option value="KENYA">KENYA</option><option value=" KOREA REPUBLIC OF"> KOREA REPUBLIC OF</option><option value="KUWAIT">KUWAIT</option><option value="LEBANON">LEBANON</option><option value="SRI LANKA">SRI LANKA</option><option value="LITHUANIA">LITHUANIA</option><option value="MEXICO">MEXICO</option><option value="NORTHERN MARIANA ISLANDS">NORTHERN MARIANA ISLANDS</option><option value="MAURITIUS">MAURITIUS</option><option value="MALAYSIA">MALAYSIA</option><option value="NETHERLANDS">NETHERLANDS</option><option value="NEPAL">NEPAL</option><option value="NEW ZEALAND">NEW ZEALAND</option><option value="OMAN">OMAN</option><option value="PAKISTAN">PAKISTAN</option><option value="PERU">PERU</option><option value="PHILIPPINES">PHILIPPINES</option><option value="PUERTO RICO">PUERTO RICO</option><option value="PORTUGAL">PORTUGAL</option><option value="QATAR">QATAR</option><option value="SAUDI ARABIA">SAUDI ARABIA</option><option value="SINGAPORE">SINGAPORE</option><option value="THAILAND">THAILAND</option><option value="TRINIDAD AND TOBAGO">TRINIDAD AND TOBAGO</option><option value="TURKEY">TURKEY</option><option value="TAIWAN">TAIWAN</option><option value="UGANDA">UGANDA</option><option value="UNITED STATES">UNITED STATES</option><option value="VENEZUELA">VENEZUELA</option><option value="VIRGIN ISLANDS (U.S.)">VIRGIN ISLANDS (U.S.)</option><option value="SOUTH AFRICA">SOUTH AFRICA</option><option value="ZIMBABWE">ZIMBABWE</option></select>
+        
+  </div>
+
+        
+      </div>
+      <div class="form-inline">
+        
+
+
+
+
+<div class="form-group "><label class="control-label" for="locations_"> Locations : </label>
+        
+          <select class="form-control" id="locations_" name="locations_"><option value="AFGHANISTAN">AFGHANISTAN</option><option value="UNITED ARAB EMIRATES">UNITED ARAB EMIRATES</option><option value="ARGENTINA">ARGENTINA</option><option value="ARGENTINA">ARGENTINA</option><option value="ARMENIA">ARMENIA</option><option value="AMERICAN SAMOA">AMERICAN SAMOA</option><option value="AUSTRALIA">AUSTRALIA</option><option value="BANGLADESH">BANGLADESH</option><option value="BOLIVIA">BOLIVIA</option><option value="BRAZIL">BRAZIL</option><option value="CANADA">CANADA</option><option value="SWITZERLAND">SWITZERLAND</option><option value="CHILE">CHILE</option><option value="CHINA">CHINA</option><option value="COLOMBIA">COLOMBIA</option><option value="COSTA RICA">COSTA RICA</option><option value="CYPRUS">CYPRUS</option><option value="CZECH REPUBLIC">CZECH REPUBLIC</option><option value="GERMANY">GERMANY</option><option value="DENMARK">DENMARK</option><option value="DOMINICAN REPUBLIC">DOMINICAN REPUBLIC</option><option value="EGYPT">EGYPT</option><option value="SPAIN">SPAIN</option><option value="FINLAND">FINLAND</option><option value="FRANCE">FRANCE</option><option value="UNITED KINGDOM">UNITED KINGDOM</option><option value="GHANA">GHANA</option><option value="GREECE">GREECE</option><option value="GUATEMALA">GUATEMALA</option><option value="GUAM">GUAM</option><option value="HONG KONG">HONG KONG</option><option value="HONG KONG">HONG KONG</option><option value="CROATIA">CROATIA</option><option value="CROATIA">CROATIA</option><option value="HUNGARY">HUNGARY</option><option value="INDONESIA">INDONESIA</option><option value="INDIA">INDIA</option><option value="IRELAND">IRELAND</option><option value="ISRAEL">ISRAEL</option><option value="ITALY">ITALY</option><option value="JORDAN">JORDAN</option><option value="JAPAN">JAPAN</option><option value="KENYA">KENYA</option><option value=" KOREA REPUBLIC OF"> KOREA REPUBLIC OF</option><option value="KUWAIT">KUWAIT</option><option value="LEBANON">LEBANON</option><option value="SRI LANKA">SRI LANKA</option><option value="LITHUANIA">LITHUANIA</option><option value="MEXICO">MEXICO</option><option value="NORTHERN MARIANA ISLANDS">NORTHERN MARIANA ISLANDS</option><option value="MAURITIUS">MAURITIUS</option><option value="MALAYSIA">MALAYSIA</option><option value="NETHERLANDS">NETHERLANDS</option><option value="NEPAL">NEPAL</option><option value="NEW ZEALAND">NEW ZEALAND</option><option value="OMAN">OMAN</option><option value="PAKISTAN">PAKISTAN</option><option value="PERU">PERU</option><option value="PHILIPPINES">PHILIPPINES</option><option value="PUERTO RICO">PUERTO RICO</option><option value="PORTUGAL">PORTUGAL</option><option value="QATAR">QATAR</option><option value="SAUDI ARABIA">SAUDI ARABIA</option><option value="SINGAPORE">SINGAPORE</option><option value="THAILAND">THAILAND</option><option value="TRINIDAD AND TOBAGO">TRINIDAD AND TOBAGO</option><option value="TURKEY">TURKEY</option><option value="TAIWAN">TAIWAN</option><option value="UGANDA">UGANDA</option><option value="UNITED STATES">UNITED STATES</option><option value="VENEZUELA">VENEZUELA</option><option value="VIRGIN ISLANDS (U.S.)">VIRGIN ISLANDS (U.S.)</option><option value="SOUTH AFRICA">SOUTH AFRICA</option><option value="ZIMBABWE">ZIMBABWE</option></select>
+        
+  </div>
+
+        
+      </div>
+      <div class="form-inline">
+        
+
+
+
+
+<div class="form-group "><label class="control-label" for="dates"> Dates : </label>
+        
+          <select class="form-control" id="dates" name="dates"><option value="AFGHANISTAN">AFGHANISTAN</option><option value="UNITED ARAB EMIRATES">UNITED ARAB EMIRATES</option><option value="ARGENTINA">ARGENTINA</option><option value="ARGENTINA">ARGENTINA</option><option value="ARMENIA">ARMENIA</option><option value="AMERICAN SAMOA">AMERICAN SAMOA</option><option value="AUSTRALIA">AUSTRALIA</option><option value="BANGLADESH">BANGLADESH</option><option value="BOLIVIA">BOLIVIA</option><option value="BRAZIL">BRAZIL</option><option value="CANADA">CANADA</option><option value="SWITZERLAND">SWITZERLAND</option><option value="CHILE">CHILE</option><option value="CHINA">CHINA</option><option value="COLOMBIA">COLOMBIA</option><option value="COSTA RICA">COSTA RICA</option><option value="CYPRUS">CYPRUS</option><option value="CZECH REPUBLIC">CZECH REPUBLIC</option><option value="GERMANY">GERMANY</option><option value="DENMARK">DENMARK</option><option value="DOMINICAN REPUBLIC">DOMINICAN REPUBLIC</option><option value="EGYPT">EGYPT</option><option value="SPAIN">SPAIN</option><option value="FINLAND">FINLAND</option><option value="FRANCE">FRANCE</option><option value="UNITED KINGDOM">UNITED KINGDOM</option><option value="GHANA">GHANA</option><option value="GREECE">GREECE</option><option value="GUATEMALA">GUATEMALA</option><option value="GUAM">GUAM</option><option value="HONG KONG">HONG KONG</option><option value="HONG KONG">HONG KONG</option><option value="CROATIA">CROATIA</option><option value="CROATIA">CROATIA</option><option value="HUNGARY">HUNGARY</option><option value="INDONESIA">INDONESIA</option><option value="INDIA">INDIA</option><option value="IRELAND">IRELAND</option><option value="ISRAEL">ISRAEL</option><option value="ITALY">ITALY</option><option value="JORDAN">JORDAN</option><option value="JAPAN">JAPAN</option><option value="KENYA">KENYA</option><option value=" KOREA REPUBLIC OF"> KOREA REPUBLIC OF</option><option value="KUWAIT">KUWAIT</option><option value="LEBANON">LEBANON</option><option value="SRI LANKA">SRI LANKA</option><option value="LITHUANIA">LITHUANIA</option><option value="MEXICO">MEXICO</option><option value="NORTHERN MARIANA ISLANDS">NORTHERN MARIANA ISLANDS</option><option value="MAURITIUS">MAURITIUS</option><option value="MALAYSIA">MALAYSIA</option><option value="NETHERLANDS">NETHERLANDS</option><option value="NEPAL">NEPAL</option><option value="NEW ZEALAND">NEW ZEALAND</option><option value="OMAN">OMAN</option><option value="PAKISTAN">PAKISTAN</option><option value="PERU">PERU</option><option value="PHILIPPINES">PHILIPPINES</option><option value="PUERTO RICO">PUERTO RICO</option><option value="PORTUGAL">PORTUGAL</option><option value="QATAR">QATAR</option><option value="SAUDI ARABIA">SAUDI ARABIA</option><option value="SINGAPORE">SINGAPORE</option><option value="THAILAND">THAILAND</option><option value="TRINIDAD AND TOBAGO">TRINIDAD AND TOBAGO</option><option value="TURKEY">TURKEY</option><option value="TAIWAN">TAIWAN</option><option value="UGANDA">UGANDA</option><option value="UNITED STATES">UNITED STATES</option><option value="VENEZUELA">VENEZUELA</option><option value="VIRGIN ISLANDS (U.S.)">VIRGIN ISLANDS (U.S.)</option><option value="SOUTH AFRICA">SOUTH AFRICA</option><option value="ZIMBABWE">ZIMBABWE</option></select>
+        
+  </div>
+
+        
+      </div>
+      
+      
+    
+      <p >
+        <div class="form-inline">
+          <button type="button" class="btn btn-success" id="btn_add_row">Add Row</button>
+          <button type="submit" class="btn btn-info">Save</button>
+          <button type="button" class="btn btn-warning" id="btn_go_back">Go Back</button>
+        </div>      
+    </form>
+  </div>
+
+  <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script> -->
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> -->
+
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+<!-- <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script> -->
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <!-- <script src="./jquery.multiselect.js"></script> -->
+
+
+  <script type="text/javascript" src="../static/js/jquery.multiselect.js"></script>
+  <!-- <script type="text/javascript" src="/static/js/prettify.js"></script> -->
+
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
+  
+
+  
+  
+
+  <script type="text/javascript">  
+    $(document).ready(function(){ 
+      $(function () {
+        $('select[multiple]').multiselect({
+            // columns: 3,
+            placeholder: 'Select States',
+            search: true,
+            searchOptions: {
+                'default': 'Search States'
+            },
+            selectAll: true
+        });
+
+    });
+
+      $("#btn_go_back").on("click", function(){
+        window.location.href = "/";
+      }); 
+    });
+        
+  </script>
+
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </body>
+</html>
