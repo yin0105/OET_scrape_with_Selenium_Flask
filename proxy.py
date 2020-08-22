@@ -52,6 +52,29 @@ def find_error(browser):
 
     return "ok"
 
+def find_elem(bb, ee, xpath):
+    for i in range(5):
+        try:
+            elem = ee.find_element_by_xpath(xpath)
+            return (elem, True)
+        except:
+            f_error_screen = True
+            while f_error_screen:
+                try:
+                    elem_error = bb.find_element_by_xpath("//[contains(text(),'loading circle']")
+                except:
+                    try:
+                        elem_error = bb.find_element_by_xpath("//[contains(text(),'Server connection lost']")
+                    except:
+                        try:
+                            elem_error = bb.find_element_by_xpath("//[contains(text(),'Error 503']")
+                        except:
+                            time.sleep(3)
+                            f_error_screen = False
+                time.sleep(1)
+    return (None, False)       
+            
+
 
 class MyThread(Thread):
  
@@ -89,7 +112,7 @@ class MyThread(Thread):
             action = ActionChains(browser)
             
             if os.environ.get('USE_PROXY') == "true":
-                my_logging(self.log, self.name, proxies_list[proxy_index] + ' started.')
+                my_logging(self.log, self.name, 'now using proxy - ' + proxies_list[proxy_index])
 
             ######## break ##############
             if proxy_status[self.name] == 0: 
@@ -168,22 +191,26 @@ class MyThread(Thread):
                 try:                    
                     if self.user["defer"] == True:
                         
-                        elems = browser.find_elements_by_xpath("//div[1]/div/div[2]/div/div[2]/div/div[2]/div/div/div[3]/div/div[2]/div[3]/div/div/div[2]/div[1]/table/tbody/tr")    
+                        # elems = browser.find_elements_by_xpath("//div[1]/div/div[2]/div/div[2]/div/div[2]/div/div/div[3]/div/div[2]/div[3]/div/div/div[2]/div[1]/table/tbody/tr")    
+                        elems, f = find_elem(browser, browser, "//div[1]/div/div[2]/div/div[2]/div/div[2]/div/div/div[3]/div/div[2]/div[3]/div/div/div[2]/div[1]/table/tbody/tr")
+                        if f == False : raise Exception("Not found element")
+
                         for elem in elems:
                             if self.user["test_date"] == "0000-00-00" or elem.find_element_by_xpath("./td[4]/div").text.upper() == self.user["test_date"]:
                                 
-                                print("actin setting")
-                                firstLevelMenu = elem.find_element_by_xpath("./td[1]/div/div/div[2]/span")
-                                print("element setting")
+                                # firstLevelMenu = elem.find_element_by_xpath("./td[1]/div/div/div[2]/span")
+                                firstLevelMenu, f = find_elem(browser, elem, "./td[1]/div/div/div[2]/span")
+                                if f == False : raise Exception("Not found element")
                                 action.move_to_element(firstLevelMenu).perform()
-                                print("move to element")
                                 
                                 if fast_mode:
                                     time.sleep(1)
                                 else:
                                     time.sleep(2)
 
-                                secondLevelMenu = browser.find_element_by_xpath("//div[2]/div[2]/div/div//span[contains(text(),'Defer')]")
+                                # secondLevelMenu = browser.find_element_by_xpath("//div[2]/div[2]/div/div//span[contains(text(),'Defer')]")
+                                secondLevelMenu, f = find_elem(browser, browser, "//div[2]/div[2]/div/div//span[contains(text(),'Defer')]")
+                                if f == False : raise Exception("Not found element")
                                 action.move_to_element(secondLevelMenu).perform() 
                                 secondLevelMenu.click()
 
@@ -202,7 +229,12 @@ class MyThread(Thread):
                                 # Next Button
                                 browser.find_element_by_xpath("//span[@class='v-button-caption'][contains(text(),'NEXT')]").click()
 
+                                if fast_mode:
+                                    time.sleep(1)
+                                else:
+                                    time.sleep(2)
                                 err_msg = find_error(browser)
+
                                 if err_msg != "ok":
                                     raise Exception(err_msg)
 
@@ -223,8 +255,9 @@ class MyThread(Thread):
                             raise Exception("")
                     else:
                         # Select Profession
-                        elem = browser.find_element_by_xpath("//span[@class='v-menubar-menuitem-caption'][contains(text(),'Apply for the test')]").click()
-                        
+                        # elem = browser.find_element_by_xpath("//span[@class='v-menubar-menuitem-caption'][contains(text(),'Apply for the test')]").click()
+                        elem, f = find_elem(browser, browser, "//span[@class='v-menubar-menuitem-caption'][contains(text(),'Apply for the test')]").click()
+                        if f == False : raise Exception("Not found element")
                         if fast_mode:
                             time.sleep(1)
                         else:
@@ -372,6 +405,32 @@ class MyThread(Thread):
                                                     if err_msg != "ok":
                                                         raise Exception(err_msg)
                                                 browser.find_element_by_xpath("//span[@class='v-button-caption'][contains(text(),'DEFER APPLICATION')]").click()                                            
+
+                                                try:
+                                                    elem = browser.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[2]/div/div[2]/div/div/div[3]/div/div[4]/div/div[2]/table/tbody/tr/td[3]/div")
+                                                    raise Exception("locations for this date is fully booked error")
+                                                except:
+                                                    pass
+
+                                                try:
+                                                    elem = browser.find_element_by_xpath("/html/body/div[2]/div[3]/div/div/div[3]/div/div/div/div[1]/div/div[2]/div/div/div/div/div/div[3]/div")
+                                                    raise Exception("Error- Booked by someone else error")
+                                                except:
+                                                    pass
+
+                                                try:
+                                                    elem = browser.find_element_by_xpath("/html/body/div[2]/div[3]/div/div/div[3]/div/div/div/div[1]/div/div[2]/div/div/div/div/div/div[3]")
+                                                    raise Exception("system error")
+                                                except:
+                                                    pass
+
+                                                try:
+                                                    elem = browser.find_element_by_xpath("/html/body/div[2]/div[3]/div/div/div[3]/div/div/div/div[1]/div/div[2]/div/div/div/div/div/div[3]/div")
+                                                    raise Exception("Unexpected error")
+                                                except:
+                                                    pass
+
+
                                                 
                                                 if fast_mode:
                                                     time.sleep(1)
@@ -482,12 +541,6 @@ class MyThread(Thread):
                                     time.sleep(1)
                                 else:
                                     time.sleep(5)
-                                
-                                # if self.user["defer"] == True:
-                                #     browser.find_element_by_xpath("//span[contains(text(), 'CANCEL')]").click() 
-                                #     time.sleep(1)
-                                #     raise Exception("defer_cancel")
-
 
                                 elem = browser.find_element_by_xpath("//div[@class='v-slot v-slot-buttons']//span[@class='v-button-caption'][contains(text(), 'PREVIOUS')]").click()
                                 
@@ -495,11 +548,6 @@ class MyThread(Thread):
                                     time.sleep(1)
                                 else:
                                     time.sleep(5)
-                            
-                            # if self.user["defer"] == True:
-                            #     browser.find_element_by_xpath("//span[contains(text(), 'CANCEL')]").click() 
-                            #     time.sleep(1)
-                            #     raise Exception("defer_cancel")
 
                             if fast_mode:
                                 time.sleep(1)
@@ -513,12 +561,8 @@ class MyThread(Thread):
                             else:
                                 time.sleep(5)
                         
-                        if self.user["defer"] == True:
-                            # browser.find_element_by_xpath("//span[contains(text(), 'CANCEL')]").click() 
-                            # time.sleep(2)
-                            # browser.find_element_by_xpath("//span[contains(text(), 'Yes')]").click()
-                            # time.sleep(10)
-                            raise Exception("defer_cancel")
+                        # if self.user["defer"] == True:
+                        #     raise Exception("defer_cancel")
 
                 except Exception as e: 
                     my_logging(self.log, self.name, " Exception : " + e.args[0])
@@ -564,7 +608,7 @@ class MyThread(Thread):
                         if fast_mode:
                             time.sleep(1)
                         else:
-                            time.sleep(30)
+                            time.sleep(sleep_period)
                         break
                     
                         
@@ -594,6 +638,7 @@ else:
 
 log_file_size = float(os.environ.get('LOG_FILE_SIZE'))
 proxy_period = float(os.environ.get('PROXY_PERIOD'))
+sleep_period = float(os.environ.get('SLEEP_PERIOD'))
 
 proxies_list = []
 proxy_index = 0
