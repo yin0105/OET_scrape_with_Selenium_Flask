@@ -17,7 +17,7 @@ from twilio.rest import Client
 import smtplib
 import logging
 from logging.handlers import RotatingFileHandler
-
+import datetime
 
 def my_logging(log, f_name, msg):
     log.propagate = True
@@ -96,7 +96,7 @@ class MyThread(Thread):
         self.user = user
         self.user["country"] = self.user["country"].split("##")
         self.user["locations"] = self.user["locations"].split("##")
-        self.user["dates"] = self.user["dates"].split("##")        
+        self.user["dates"] = self.user["dates"].split(",")        
         self.log = logging.getLogger("a")  # root logger
  
     def run(self):
@@ -375,6 +375,11 @@ class MyThread(Thread):
                             for date_ in self.user["dates"]:
                                 if time.perf_counter() - start_time >= proxy_period * 60: break 
                                 print("date = " + date_)
+
+                                dd = date_.split("-")
+                                ddd = datetime.datetime(int(dd[2]), int(dd[1]), int(dd[0]))
+                                date_2 = ddd.strftime('%d %b %Y').upper()
+                                print("date_2 = " + date_2)
                                 try:
                                     select.select_by_visible_text(date_)
                                     my_logging(self.log, self.name, 'Date: ' + date_) 

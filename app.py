@@ -152,7 +152,7 @@ def add_user():
             defer = 0
             if "defer" in request.form: defer = 1
             user_ = User(request.form['name'], request.form['username'], request.form['password'], request.form['email'], request.form['phone'], \
-                request.form['profession'], "##".join(request.form.getlist('country')), "##".join(request.form.getlist('dates')),  \
+                request.form['profession'], "##".join(request.form.getlist('country')), request.form['dates'],  \
                 "##".join(request.form.getlist('locations_')), defer, request.form['test_date'])
             
             db.session.add(user_)
@@ -177,7 +177,7 @@ def edit_user():
             print(defer)
             db.session.query(User).filter_by(id = request.form['id']).update({User.name: request.form['name'], User.username: request.form['username'], \
                 User.password: request.form['password'], User.email: request.form['email'], User.phone: request.form['phone'], User.profession: request.form['profession'], \
-                User.country: "##".join(request.form.getlist('country')), User.dates: "##".join(request.form.getlist('dates')), \
+                User.country: "##".join(request.form.getlist('country')), User.dates: request.form['dates'], \
                 User.locations: "##".join(request.form.getlist('locations_')), User.defer: defer, User.test_date: request.form['test_date']}, synchronize_session = False)
             db.session.commit()
             flash('Record was successfully updated')
@@ -186,7 +186,7 @@ def edit_user():
         user_ = User.query.filter_by(id=request.form['user_id']).first()
         user_.country = user_.country.split("##")
         user_.locations = user_.locations.split("##")
-        user_.dates = user_.dates.split("##")
+        # user_.dates = user_.dates.split(",")
         pprint.pprint(user_.country)
     return render_template('user.html', form=form, user=user_)
 
