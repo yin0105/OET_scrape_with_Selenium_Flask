@@ -496,7 +496,7 @@ class MyThread(Thread):
                                                 try:
                                                     elem, f = find_elem(False, browser, browser, "//div[1]/div/div[2]/div/div[1]/div/div[contains(text(), 'My Dashboard')]")
                                                     if f == False : raise Exception("Not found element")
-                                                    msg = "Alert for %NAME. %DATE %TIME at %LOCATION. Date booked successfully"
+                                                    msg = "Alert for %NAME. %DATE at %LOCATION. Date booked successfully"
                                                 except:
                                                     raise Exception("date_missed")
 
@@ -504,7 +504,7 @@ class MyThread(Thread):
 
 
                                             sended = False
-                                            msg = msg.replace("%NAME", self.name).replace("%DATE", date_2).replace("%LOCATION", location)
+                                            msg = msg.replace("%NAME", self.user["name"]).replace("%DATE", date_2).replace("%LOCATION", location)
                                             print(msg)
                                             ######## break ##############
                                             if proxy_status[self.name] == 0: 
