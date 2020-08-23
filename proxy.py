@@ -100,7 +100,7 @@ class MyThread(Thread):
         self.log = logging.getLogger("a")  # root logger
  
     def run(self):
-        global proxies_list, proxy_index   
+        global proxies_list, proxy_index , cur_error  
 
         while proxy_status[self.name] == 1 or proxy_status[self.name] == 4:
             start_time = time.perf_counter()
@@ -278,7 +278,7 @@ class MyThread(Thread):
 
                                 break
                         else:
-                            raise Exception("")
+                            raise Exception("else")
                     else:
                         # Select Profession
                         # elem = browser.find_element_by_xpath("//span[@class='v-menubar-menuitem-caption'][contains(text(),'Apply for the test')]").click()
@@ -390,7 +390,7 @@ class MyThread(Thread):
                                         my_logging(self.log, self.name, proxies_list[proxy_index] + ': Browser is stopped by admin.')
                                         return
                                 except :#ElementNotVisibleException
-                                    
+                                    my_logging(self.log, self.name, 'Date(' + date_ + ') not found')
                                     if fast_mode:
                                         pass
                                     else:
@@ -585,6 +585,7 @@ class MyThread(Thread):
                                                 my_logging(self.log, self.name, " Message sent.") 
                                                 browser.close()
                                                 return
+                                    my_logging(self.log, self.name, 'Locations not found')
                                 if fast_mode:
                                     time.sleep(1)
                                 else:
@@ -615,59 +616,70 @@ class MyThread(Thread):
                         #     raise Exception("defer_cancel")
 
                 except Exception as e: 
-                    my_logging(self.log, self.name, " Exception : " + e.args[0])
+                    my_logging(self.log, self.name, " Exception : " + e.args[0])                    
                     if e.args[0] == "date_missed":                    
                         proxy_status[self.name] = 4
                         my_logging(self.log, self.name, " Date Missed.")
                     if e.args[0] == "defer_cancel":
                         proxy_change = False
+                    
+                    cur_error = e.args[0]                    
                         
                 finally: 
-                    if self.user["defer"] == True:
-                        try:
-                            elem, f = find_elem(False, browser, browser, "//span[contains(text(), 'CANCEL')]")
-                            if f == False : raise Exception("Not found element")
-                            elem.click() 
-                            time.sleep(2)
-                            elem, f = find_elem(False, browser, browser, "//span[contains(text(), 'Yes')]")
-                            if f == False : raise Exception("Not found element")
-                            elem.click() 
-                            time.sleep(10)
-                        except:
-                            pass
-                    else:
-                        try:
-                            firstLevelMenu, f = find_elem(False, browser, browser, "//body/div[1]/div/div[2]/div/div[1]/div/div[2]/span[1]/span[2]")
-                            if f == False : raise Exception("Not found element")
-                            action.move_to_element(firstLevelMenu).perform()
-                                
-                            if fast_mode:
-                                time.sleep(1)
-                            else:
-                                time.sleep(2)
-                            secondLevelMenu, f = find_elem(False, browser, browser, "//body/div[2]/div[2]/div/div/span[2]/span")
-                            if f == False : raise Exception("Not found element")
-                            # secondLevelMenu = browser.find_element_by_xpath("//body/div[2]/div[2]/div/div/span[2]/span")
-                            action.move_to_element(secondLevelMenu).perform() 
-                            secondLevelMenu.click()
-                            try:
-                                elem, f = find_elem(False, browser, browser, "//body/div[2]/div[3]/div/div/div[3]/div/div/div/div[2]/div/div[1]/div/span/span")
-                                if f == False : raise Exception("Not found element")
-                                # elem = browser.find_element_by_xpath("//body/div[2]/div[3]/div/div/div[3]/div/div/div/div[2]/div/div[1]/div/span/span")
-                                elem.click()
-                            except:
-                                pass
-                        except:
-                            pass
-                        # browser.save_screenshot("image_logs/" + self.user["name"] + time.strftime("-%Y-%m-%d-%H-%M-%S") +".png") 
+                    # if self.user["defer"] == True:
+                    #     try:
+                    #         elem, f = find_elem(False, browser, browser, "//span[contains(text(), 'CANCEL')]")
+                    #         if f == False : raise Exception("Not found element")
+                    #         elem.click() 
+                    #         time.sleep(2)
+                    #         elem, f = find_elem(False, browser, browser, "//span[contains(text(), 'Yes')]")
+                    #         if f == False : raise Exception("Not found element")
+                    #         elem.click() 
+                    #         time.sleep(10)
+                    #     except:
+                    #         pass
+                    # else:
+                    if cur_error == "Not found element":
+                        browser.save_screenshot("image_logs/" + self.user["name"] + time.strftime("-%Y-%m-%d-%H-%M-%S") +".png") 
                         browser.close()
-                        my_logging(self.log, self.name, proxies_list[proxy_index] + ': Failed.   Other Proxy will is started.') 
-                        
+                        my_logging(self.log, self.name, proxies_list[proxy_index] + ': Not found element.   Other Proxy will is started.') 
                         if fast_mode:
                             time.sleep(1)
                         else:
                             time.sleep(sleep_period)
                         break
+                    try:
+                        firstLevelMenu, f = find_elem(False, browser, browser, "//body/div[1]/div/div[2]/div/div[1]/div/div[2]/span[1]/span[2]")
+                        if f == False : raise Exception("Not found element")
+                        action.move_to_element(firstLevelMenu).perform()
+                                
+                        if fast_mode:
+                            time.sleep(1)
+                        else:
+                            time.sleep(2)
+                        secondLevelMenu, f = find_elem(False, browser, browser, "//body/div[2]/div[2]/div/div/span[2]/span")
+                        if f == False : raise Exception("Not found element")
+                        # secondLevelMenu = browser.find_element_by_xpath("//body/div[2]/div[2]/div/div/span[2]/span")
+                        action.move_to_element(secondLevelMenu).perform() 
+                        secondLevelMenu.click()
+                        try:
+                            elem, f = find_elem(False, browser, browser, "//body/div[2]/div[3]/div/div/div[3]/div/div/div/div[2]/div/div[1]/div/span/span")
+                            if f == False : raise Exception("Not found element")
+                            # elem = browser.find_element_by_xpath("//body/div[2]/div[3]/div/div/div[3]/div/div/div/div[2]/div/div[1]/div/span/span")
+                            elem.click()
+                        except:
+                            pass
+                    except:
+                        pass
+                    browser.save_screenshot("image_logs/" + self.user["name"] + time.strftime("-%Y-%m-%d-%H-%M-%S") +".png") 
+                    browser.close()
+                    my_logging(self.log, self.name, proxies_list[proxy_index] + ': Failed.   Other Proxy will is started.') 
+                        
+                    if fast_mode:
+                        time.sleep(1)
+                    else:
+                        time.sleep(sleep_period)
+                    break
                     
                         
 
@@ -703,3 +715,4 @@ proxy_index = 0
 proxy_status = {}
 
 formatter = logging.Formatter('%(asctime)s    %(message)s')
+cur_error = ""
