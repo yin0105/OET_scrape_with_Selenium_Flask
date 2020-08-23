@@ -70,13 +70,16 @@ def find_elem(collection, bb, ee, xpath):
             f_error_screen = True
             while f_error_screen:
                 try:
-                    elem_error = bb.find_element_by_xpath("//[contains(text(),'loading circle']")
+                    elem_error = bb.find_element_by_xpath("/html/body/div[1]/div/div[1]")
+                    if not elem_error.is_displayed(): raise Exception("") 
                 except:
                     try:
-                        elem_error = bb.find_element_by_xpath("//[contains(text(),'Server connection lost']")
+                        elem_error = bb.find_element_by_xpath("/html/body/div[2]/div[4]/div/div/div[2]")
+                        if not elem_error.is_displayed(): raise Exception("") 
                     except:
                         try:
                             elem_error = bb.find_element_by_xpath("//[contains(text(),'Error 503']")
+                            if not elem_error.is_displayed(): raise Exception("") 
                         except:
                             time.sleep(3)
                             f_error_screen = False
