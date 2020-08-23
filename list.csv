@@ -168,12 +168,12 @@ India,Ahmedabad,"Planet EDU, Ahmedabad",2020-10-11
 India,Ahmedabad,"Planet EDU, Ahmedabad",2020-10-24
 India,Ahmedabad,"Planet EDU, Ahmedabad",2020-11-7
 India,Ahmedabad,"Planet EDU, Ahmedabad",2020-11-21
-India,Amritsar,"Planet EDU, Amritsar",2020-8-22
 India,Amritsar,"Planet EDU, Amritsar",2020-9-12
 India,Amritsar,"Planet EDU, Amritsar",2020-9-26
 India,Amritsar,"Planet EDU, Amritsar",2020-10-11
 India,Amritsar,"Planet EDU, Amritsar",2020-10-24
 India,Amritsar,"Planet EDU, Amritsar",2020-11-7
+India,Amritsar,"Planet EDU, Amritsar",2020-11-21
 India,Bangalore,PEAR Academy Bangalore,2020-8-8
 India,Bangalore,PEAR Academy Bangalore,2020-8-22
 India,Bangalore,PEAR Academy Bangalore,2020-9-12
@@ -356,11 +356,11 @@ Mexico,Mexico City,International House Mexico,2020-10-10
 Mexico,Mexico City,International House Mexico,2020-10-23
 Mexico,Mexico City,International House Mexico,2020-11-6
 Nepal,Bharatpur,Chitwan Medical College,2020-8-8
-Nepal,Bharatpur,Chitwan Medical College,2020-8-22
 Nepal,Bharatpur,Chitwan Medical College,2020-9-12
 Nepal,Bharatpur,Chitwan Medical College,2020-9-26
 Nepal,Bharatpur,Chitwan Medical College,2020-10-11
 Nepal,Bharatpur,Chitwan Medical College,2020-10-24
+Nepal,Bharatpur,Chitwan Medical College,2020-11-7
 Nepal,Kathmandu,"Universal Language & Computer Institute, Nepal",2020-8-8
 Nepal,Kathmandu,"Universal Language & Computer Institute, Nepal",2020-9-12
 Nepal,Kathmandu,"Universal Language & Computer Institute, Nepal",2020-9-26
@@ -445,48 +445,48 @@ Philippines,Baguio,ACE Testing Baguio,2020-9-12
 Philippines,Baguio,ACE Testing Baguio,2020-9-26
 Philippines,Baguio,ACE Testing Baguio,2020-10-11
 Philippines,Baguio,ACE Testing Baguio,2020-10-24
-Philippines,Cebu,ACE Testing Cebu,2020-8-22
 Philippines,Cebu,ACE Testing Cebu,2020-9-12
 Philippines,Cebu,ACE Testing Cebu,2020-9-26
 Philippines,Cebu,ACE Testing Cebu,2020-10-11
 Philippines,Cebu,ACE Testing Cebu,2020-10-24
 Philippines,Cebu,ACE Testing Cebu,2020-11-7
+Philippines,Cebu,ACE Testing Cebu,2020-11-21
 Philippines,Cebu,Kaplan Cebu,2020-8-8
-Philippines,Cebu,Kaplan Cebu,2020-8-22
 Philippines,Cebu,Kaplan Cebu,2020-9-12
 Philippines,Cebu,Kaplan Cebu,2020-9-26
 Philippines,Cebu,Kaplan Cebu,2020-10-11
 Philippines,Cebu,Kaplan Cebu,2020-10-24
+Philippines,Cebu,Kaplan Cebu,2020-11-7
 Philippines,Iloilo,Kaplan Iloilo,2020-8-8
-Philippines,Iloilo,Kaplan Iloilo,2020-8-22
 Philippines,Iloilo,Kaplan Iloilo,2020-9-12
 Philippines,Iloilo,Kaplan Iloilo,2020-9-26
 Philippines,Iloilo,Kaplan Iloilo,2020-10-11
 Philippines,Iloilo,Kaplan Iloilo,2020-10-24
-Philippines,Makati City,ACE Testing Makati,2020-8-22
+Philippines,Iloilo,Kaplan Iloilo,2020-11-7
 Philippines,Makati City,ACE Testing Makati,2020-9-12
 Philippines,Makati City,ACE Testing Makati,2020-9-26
 Philippines,Makati City,ACE Testing Makati,2020-10-11
 Philippines,Makati City,ACE Testing Makati,2020-10-24
 Philippines,Makati City,ACE Testing Makati,2020-11-7
-Philippines,Manila,Kaplan Manila,2020-8-22
+Philippines,Makati City,ACE Testing Makati,2020-11-21
 Philippines,Manila,Kaplan Manila,2020-9-12
 Philippines,Manila,Kaplan Manila,2020-9-26
 Philippines,Manila,Kaplan Manila,2020-10-11
 Philippines,Manila,Kaplan Manila,2020-10-24
 Philippines,Manila,Kaplan Manila,2020-11-7
-Philippines,Quezon City,Kaplan Quezon City,2020-8-22
+Philippines,Manila,Kaplan Manila,2020-11-21
 Philippines,Quezon City,Kaplan Quezon City,2020-9-12
 Philippines,Quezon City,Kaplan Quezon City,2020-9-26
 Philippines,Quezon City,Kaplan Quezon City,2020-10-11
 Philippines,Quezon City,Kaplan Quezon City,2020-10-24
 Philippines,Quezon City,Kaplan Quezon City,2020-11-7
-Philippines,San Juan,Kaplan San Juan,2020-8-22
+Philippines,Quezon City,Kaplan Quezon City,2020-11-21
 Philippines,San Juan,Kaplan San Juan,2020-9-12
 Philippines,San Juan,Kaplan San Juan,2020-9-26
 Philippines,San Juan,Kaplan San Juan,2020-10-11
 Philippines,San Juan,Kaplan San Juan,2020-10-24
 Philippines,San Juan,Kaplan San Juan,2020-11-7
+Philippines,San Juan,Kaplan San Juan,2020-11-21
 Poland,Warsaw,"Lang LTC, Warsaw",2020-8-8
 Poland,Warsaw,"Lang LTC, Warsaw",2020-8-22
 Poland,Warsaw,"Lang LTC, Warsaw",2020-9-12
@@ -801,6 +801,12 @@ USA,Florida,Ximedus,2020-10-10
 USA,Florida,Ximedus,2020-10-23
 USA,Florida,Ximedus,2020-11-6
 USA,Florida,Ximedus,2020-11-20
+USA,Illinois,Oxford International-CSEC Chicago,2020-9-25
+USA,Illinois,Oxford International-CSEC Chicago,2020-10-10
+USA,Illinois,Oxford International-CSEC Chicago,2020-10-23
+USA,Illinois,Oxford International-CSEC Chicago,2020-11-6
+USA,Illinois,Oxford International-CSEC Chicago,2020-11-20
+USA,Illinois,Oxford International-CSEC Chicago,2020-12-04
 USA,Massachusetts,Oxford International Boston,2020-8-21
 USA,Massachusetts,Oxford International Boston,2020-9-11
 USA,Massachusetts,Oxford International Boston,2020-9-25
@@ -825,6 +831,12 @@ USA,Oregon,Portland English Language Academy,2020-9-11
 USA,Oregon,Portland English Language Academy,2020-9-25
 USA,Oregon,Portland English Language Academy,2020-10-10
 USA,Oregon,Portland English Language Academy,2020-10-23
+USA,Pennsylvania,Oxford International-CSEC Philadelphia,2020-9-25
+USA,Pennsylvania,Oxford International-CSEC Philadelphia,2020-10-10
+USA,Pennsylvania,Oxford International-CSEC Philadelphia,2020-10-23
+USA,Pennsylvania,Oxford International-CSEC Philadelphia,2020-11-6
+USA,Pennsylvania,Oxford International-CSEC Philadelphia,2020-11-20
+USA,Pennsylvania,Oxford International-CSEC Philadelphia,2020-12-04
 USA,Pennsylvania,Oxford International Pittsburgh,2020-8-21
 USA,Pennsylvania,Oxford International Pittsburgh,2020-9-11
 USA,Pennsylvania,Oxford International Pittsburgh,2020-9-25

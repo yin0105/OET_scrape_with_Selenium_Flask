@@ -33,29 +33,38 @@ def my_logging(log, f_name, msg):
 
 def find_error(browser):
     try:
-        elem = browser.find_element_by_xpath("//[contains(text(),'System Error']")
+        elem = browser.find_element_by_xpath("/html/body/div[2]/div[3]/div/div/div[3]/div/div/div/div[1]/div/div[2]/div/div/div/div/div/div[3]")
         return "System Error"
     except:
         pass
 
     try:
-        elem = browser.find_element_by_xpath("//[contains(text(),'already been taken by others']")
+        elem = browser.find_element_by_xpath("/html/body/div[2]/div[3]/div/div/div[3]/div/div/div/div[1]/div/div[2]/div/div/div/div/div/div[3]/div")
         return "already been taken by others"
     except:
         pass
 
     try:
-        elem = browser.find_element_by_xpath("//[contains(text(),'This location is fully booked for this date']")
+        elem = browser.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[2]/div/div[2]/div/div/div[3]/div/div[4]/div/div[2]/table/tbody/tr/td[3]/div")
         return "This location is fully booked for this date. Please select a different location or date."
+    except:
+        pass
+
+    try:
+        elem = browser.find_element_by_xpath("//html/body/div[2]/div[3]/div/div/div[3]/div/div/div/div[1]/div/div[2]/div/div/div/div/div/div[3]/div")
+        return "Unexpected error"
     except:
         pass
 
     return "ok"
 
-def find_elem(bb, ee, xpath):
+def find_elem(collection, bb, ee, xpath):
     for i in range(5):
         try:
-            elem = ee.find_element_by_xpath(xpath)
+            if collection == True:
+                elem = ee.find_elements_by_xpath(xpath)
+            else:
+                elem = ee.find_element_by_xpath(xpath)
             return (elem, True)
         except:
             f_error_screen = True
@@ -177,7 +186,10 @@ class MyThread(Thread):
                     browser.close()
                     my_logging(self.log, self.name, proxies_list[proxy_index] + ': Browser is stopped by admin.')
                     return
-                elem = browser.find_element_by_xpath("//div[@class='v-slot v-slot-button-0 v-slot-i-understand v-slot-primary']//span[@class='v-button-caption']").click() #[contains(text(),'I UNDERSTAND']
+                # elem = browser.find_element_by_xpath("//div[@class='v-slot v-slot-button-0 v-slot-i-understand v-slot-primary']//span[@class='v-button-caption']").click() #[contains(text(),'I UNDERSTAND']
+                elem, f = find_elem(False, browser, browser, "//div[@class='v-slot v-slot-button-0 v-slot-i-understand v-slot-primary']//span[@class='v-button-caption']")
+                elem.click()
+                if f == False : raise Exception("Not found element")
             except:
                 # Incorrect Login
                 proxy_status[self.name] = 3 # Incorrect Login
@@ -192,14 +204,19 @@ class MyThread(Thread):
                     if self.user["defer"] == True:
                         
                         # elems = browser.find_elements_by_xpath("//div[1]/div/div[2]/div/div[2]/div/div[2]/div/div/div[3]/div/div[2]/div[3]/div/div/div[2]/div[1]/table/tbody/tr")    
-                        elems, f = find_elem(browser, browser, "//div[1]/div/div[2]/div/div[2]/div/div[2]/div/div/div[3]/div/div[2]/div[3]/div/div/div[2]/div[1]/table/tbody/tr")
+                        elems, f = find_elem(True, browser, browser, "//div[1]/div/div[2]/div/div[2]/div/div[2]/div/div/div[3]/div/div[2]/div[3]/div/div/div[2]/div[1]/table/tbody/tr")
+                        print("##################################")
+                        print(str(f))
+                        print("#######################################")
                         if f == False : raise Exception("Not found element")
 
                         for elem in elems:
-                            if self.user["test_date"] == "0000-00-00" or elem.find_element_by_xpath("./td[4]/div").text.upper() == self.user["test_date"]:
+                            elem_, f = find_elem(False, browser, elem, "./td[4]/div")
+                            if f == False : raise Exception("Not found element")
+                            if self.user["test_date"] == "0000-00-00" or elem_.text.upper() == self.user["test_date"]:
                                 
                                 # firstLevelMenu = elem.find_element_by_xpath("./td[1]/div/div/div[2]/span")
-                                firstLevelMenu, f = find_elem(browser, elem, "./td[1]/div/div/div[2]/span")
+                                firstLevelMenu, f = find_elem(False, browser, elem, "./td[1]/div/div/div[2]/span")
                                 if f == False : raise Exception("Not found element")
                                 action.move_to_element(firstLevelMenu).perform()
                                 
@@ -209,7 +226,7 @@ class MyThread(Thread):
                                     time.sleep(2)
 
                                 # secondLevelMenu = browser.find_element_by_xpath("//div[2]/div[2]/div/div//span[contains(text(),'Defer')]")
-                                secondLevelMenu, f = find_elem(browser, browser, "//div[2]/div[2]/div/div//span[contains(text(),'Defer')]")
+                                secondLevelMenu, f = find_elem(False, browser, browser, "//div[2]/div[2]/div/div//span[contains(text(),'Defer')]")
                                 if f == False : raise Exception("Not found element")
                                 action.move_to_element(secondLevelMenu).perform() 
                                 secondLevelMenu.click()
@@ -220,14 +237,20 @@ class MyThread(Thread):
                                     time.sleep(2)
 
                                 # Confirm Button
-                                browser.find_element_by_xpath("//div[2]/div[3]/div/div/div[3]/div/div/div/div[2]/div/div[3]/div/span/span").click()
+                                # browser.find_element_by_xpath("//div[2]/div[3]/div/div/div[3]/div/div/div/div[2]/div/div[3]/div/span/span").click()
+                                elem, f = find_elem(False, browser, browser, "//div[2]/div[3]/div/div/div[3]/div/div/div/div[2]/div/div[3]/div/span/span")
+                                if f == False : raise Exception("Not found element")
+                                elem.click()
                                 
                                 if fast_mode:
                                     time.sleep(1)
                                 else:
                                     time.sleep(2)
                                 # Next Button
-                                browser.find_element_by_xpath("//span[@class='v-button-caption'][contains(text(),'NEXT')]").click()
+                                # browser.find_element_by_xpath("//span[@class='v-button-caption'][contains(text(),'NEXT')]").click()
+                                elem, f = find_elem(False, browser, browser, "//span[@class='v-button-caption'][contains(text(),'NEXT')]")
+                                if f == False : raise Exception("Not found element")
+                                elem.click()
 
                                 if fast_mode:
                                     time.sleep(1)
@@ -256,8 +279,9 @@ class MyThread(Thread):
                     else:
                         # Select Profession
                         # elem = browser.find_element_by_xpath("//span[@class='v-menubar-menuitem-caption'][contains(text(),'Apply for the test')]").click()
-                        elem, f = find_elem(browser, browser, "//span[@class='v-menubar-menuitem-caption'][contains(text(),'Apply for the test')]").click()
+                        elem, f = find_elem(False, browser, browser, "//span[@class='v-menubar-menuitem-caption'][contains(text(),'Apply for the test')]")
                         if f == False : raise Exception("Not found element")
+                        elem.click()
                         if fast_mode:
                             time.sleep(1)
                         else:
@@ -273,7 +297,10 @@ class MyThread(Thread):
                             my_logging(self.log, self.name, proxies_list[proxy_index] + ': Browser is stopped by admin.')
                             return
 
-                        select = Select(browser.find_element_by_xpath("//tr[@class='v-formlayout-row v-formlayout-firstrow']/td[@class='v-formlayout-contentcell']//select"))
+                        elem, f = find_elem(False, browser, browser, "//tr[@class='v-formlayout-row v-formlayout-firstrow']/td[@class='v-formlayout-contentcell']//select")
+                        if f == False : raise Exception("Not found element")
+
+                        select = Select(elem)
                         select.select_by_visible_text(self.user["profession"])
                         my_logging(self.log, self.name, 'Profession: ' + self.user["profession"]) 
                         
@@ -289,9 +316,13 @@ class MyThread(Thread):
                             print("country: ##" + country + "##")
                             try:
                                 if self.user['defer'] == True:
-                                    select = Select(browser.find_element_by_xpath("//div[1]/div/div[2]/div/div[2]/div/div[2]/div/div/div[3]/div/div[2]/div/div[2]/div[3]/table/tbody/tr/td[3]/div/select"))
+                                    elem, f = find_elem(False, browser, browser, "//div[1]/div/div[2]/div/div[2]/div/div[2]/div/div/div[3]/div/div[2]/div/div[2]/div[3]/table/tbody/tr/td[3]/div/select")
+                                    if f == False : raise Exception("Not found element")
+                                    select = Select(elem)
                                 else:
-                                    select = Select(browser.find_element_by_xpath("//tr[@class='v-formlayout-row v-formlayout-lastrow']/td[@class='v-formlayout-contentcell']//select"))
+                                    elem, f = find_elem(False, browser, browser, "//tr[@class='v-formlayout-row v-formlayout-lastrow']/td[@class='v-formlayout-contentcell']//select")
+                                    if f == False : raise Exception("Not found element")
+                                    select = Select(elem)
                                 
                                 select.select_by_visible_text(country)
                                 my_logging(self.log, self.name, 'Country: ' + country)
@@ -317,7 +348,9 @@ class MyThread(Thread):
                                 browser.close()
                                 my_logging(self.log, self.name, proxies_list[proxy_index] + ': Browser is stopped by admin.')
                                 return
-                            elem = browser.find_element_by_xpath("//span[@class='v-button-caption'][contains(text(),'NEXT')]").click()
+                            elem, f = find_elem(False, browser, browser, "//span[@class='v-button-caption'][contains(text(),'NEXT')]")
+                            if f == False : raise Exception("Not found element")
+                            elem.click()
                             
                             if fast_mode:
                                 time.sleep(1)
@@ -333,8 +366,9 @@ class MyThread(Thread):
                                 browser.close()
                                 my_logging(self.log, self.name, proxies_list[proxy_index] + ': Browser is stopped by admin.')
                                 return
-
-                            select = Select(browser.find_element_by_xpath("//div[@class='v-slot v-slot-time-select v-slot-booking-style v-slot-current']//select"))
+                            elem, f = find_elem(False, browser, browser, "//div[@class='v-slot v-slot-time-select v-slot-booking-style v-slot-current']//select")
+                            if f == False : raise Exception("Not found element")
+                            select = Select(elem)
                             for date_ in self.user["dates"]:
                                 if time.perf_counter() - start_time >= proxy_period * 60: break 
                                 print("date = " + date_)
@@ -360,7 +394,9 @@ class MyThread(Thread):
                                         time.sleep(2)
 
                                     continue
-                                elem = browser.find_element_by_xpath("//span[@class='v-button-caption'][contains(text(),'NEXT')]").click()
+                                elem, f = find_elem(False, browser, browser, "//span[@class='v-button-caption'][contains(text(),'NEXT')]")
+                                if f == False : raise Exception("Not found element")
+                                elem.click()
                                 
                                 if fast_mode:
                                     time.sleep(1)
@@ -378,14 +414,19 @@ class MyThread(Thread):
                                     return
                                 
                                 for location in self.user["locations"]:
-                                    my_logging(self.log, self.name, 'Location: ' + location) 
-                                    elems = browser.find_elements_by_xpath("//div[@class='v-slot v-slot-venue-select v-slot-booking-style v-slot-current']//tr[@class='v-formlayout-row v-formlayout-firstrow']//span[@class='v-radiobutton v-select-option']")
+                                    my_logging(self.log, self.name, 'Location: ' + location)
+                                    elems, f = find_elem(True, browser, browser, "//div[@class='v-slot v-slot-venue-select v-slot-booking-style v-slot-current']//tr[@class='v-formlayout-row v-formlayout-firstrow']//span[@class='v-radiobutton v-select-option']")
+                                    if f == False : raise Exception("Not found element") 
                                     for elem in elems:
-                                        txt = elem.find_element_by_xpath("./label[2]/span").text.strip().lower()
+                                        elem_, f = find_elem(False, browser, elem, "./label[2]/span")
+                                        if f == False : raise Exception("Not found element")
+                                        txt = elem_.text.strip().lower()
                                         my_logging(self.log, self.name, "LLL : " + txt)
                                         if txt.find(location.strip().lower()) > -1:
                                             print("OK")
-                                            elem.find_element_by_xpath("./label[1]").click()
+                                            elem_, f = find_elem(False, browser, elem, "./label[1]")
+                                            if f == False : raise Exception("Not found element")
+                                            elem_.click()
                                             msg = os.environ.get('MESSAGE')
 
                                             if self.user["defer"] == True:
@@ -393,8 +434,9 @@ class MyThread(Thread):
                                                     time.sleep(1)
                                                 else:
                                                     time.sleep(5)
-
-                                                browser.find_element_by_xpath("//span[@class='v-button-caption'][contains(text(),'NEXT')]").click()
+                                                elem_, f = find_elem(False, browser, browser, "//span[@class='v-button-caption'][contains(text(),'NEXT')]")
+                                                if f == False : raise Exception("Not found element")
+                                                elem_.click()
                                                 
                                                 if fast_mode:
                                                     time.sleep(1)
@@ -404,31 +446,33 @@ class MyThread(Thread):
                                                     err_msg = find_error(browser)
                                                     if err_msg != "ok":
                                                         raise Exception(err_msg)
-                                                browser.find_element_by_xpath("//span[@class='v-button-caption'][contains(text(),'DEFER APPLICATION')]").click()                                            
+                                                elem_, f = find_elem(False, browser, browser, "//span[@class='v-button-caption'][contains(text(),'DEFER APPLICATION')]")
+                                                if f == False : raise Exception("Not found element")
+                                                elem_.click()                                            
 
-                                                try:
-                                                    elem = browser.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[2]/div/div[2]/div/div/div[3]/div/div[4]/div/div[2]/table/tbody/tr/td[3]/div")
-                                                    raise Exception("locations for this date is fully booked error")
-                                                except:
-                                                    pass
+                                                # try:
+                                                #     elem = browser.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[2]/div/div[2]/div/div/div[3]/div/div[4]/div/div[2]/table/tbody/tr/td[3]/div")
+                                                #     raise Exception("locations for this date is fully booked error")
+                                                # except:
+                                                #     pass
 
-                                                try:
-                                                    elem = browser.find_element_by_xpath("/html/body/div[2]/div[3]/div/div/div[3]/div/div/div/div[1]/div/div[2]/div/div/div/div/div/div[3]/div")
-                                                    raise Exception("Error- Booked by someone else error")
-                                                except:
-                                                    pass
+                                                # try:
+                                                #     elem = browser.find_element_by_xpath("/html/body/div[2]/div[3]/div/div/div[3]/div/div/div/div[1]/div/div[2]/div/div/div/div/div/div[3]/div")
+                                                #     raise Exception("Error- Booked by someone else error")
+                                                # except:
+                                                #     pass
 
-                                                try:
-                                                    elem = browser.find_element_by_xpath("/html/body/div[2]/div[3]/div/div/div[3]/div/div/div/div[1]/div/div[2]/div/div/div/div/div/div[3]")
-                                                    raise Exception("system error")
-                                                except:
-                                                    pass
+                                                # try:
+                                                #     elem = browser.find_element_by_xpath("/html/body/div[2]/div[3]/div/div/div[3]/div/div/div/div[1]/div/div[2]/div/div/div/div/div/div[3]")
+                                                #     raise Exception("system error")
+                                                # except:
+                                                #     pass
 
-                                                try:
-                                                    elem = browser.find_element_by_xpath("/html/body/div[2]/div[3]/div/div/div[3]/div/div/div/div[1]/div/div[2]/div/div/div/div/div/div[3]/div")
-                                                    raise Exception("Unexpected error")
-                                                except:
-                                                    pass
+                                                # try:
+                                                #     elem = browser.find_element_by_xpath("/html/body/div[2]/div[3]/div/div/div[3]/div/div/div/div[1]/div/div[2]/div/div/div/div/div/div[3]/div")
+                                                #     raise Exception("Unexpected error")
+                                                # except:
+                                                #     pass
 
 
                                                 
@@ -442,7 +486,8 @@ class MyThread(Thread):
                                                     raise Exception(err_msg)
 
                                                 try:
-                                                    elem = browser.find_element_by_xpath("//div[1]/div/div[2]/div/div[1]/div/div[contains(text(), 'My Dashboard')]")
+                                                    elem, f = find_elem(False, browser, browser, "//div[1]/div/div[2]/div/div[1]/div/div[contains(text(), 'My Dashboard')]")
+                                                    if f == False : raise Exception("Not found element")
                                                     msg = "Alert for %NAME. %DATE %TIME at %LOCATION. Date booked successfully"
                                                 except:
                                                     raise Exception("date_missed")
@@ -541,8 +586,9 @@ class MyThread(Thread):
                                     time.sleep(1)
                                 else:
                                     time.sleep(5)
-
-                                elem = browser.find_element_by_xpath("//div[@class='v-slot v-slot-buttons']//span[@class='v-button-caption'][contains(text(), 'PREVIOUS')]").click()
+                                elem, f = find_elem(False, browser, browser, "//div[@class='v-slot v-slot-buttons']//span[@class='v-button-caption'][contains(text(), 'PREVIOUS')]")
+                                if f == False : raise Exception("Not found element")
+                                elem.click()
                                 
                                 if fast_mode:
                                     time.sleep(1)
@@ -553,8 +599,9 @@ class MyThread(Thread):
                                 time.sleep(1)
                             else:
                                 time.sleep(5)
-
-                            elem = browser.find_element_by_xpath("//div[@class='v-slot v-slot-buttons']//span[@class='v-button-caption'][contains(text(), 'PREVIOUS')]").click()
+                            elem, f = find_elem(False, browser, browser, "//div[@class='v-slot v-slot-buttons']//span[@class='v-button-caption'][contains(text(), 'PREVIOUS')]")
+                            if f == False : raise Exception("Not found element")
+                            elem.click()
                             
                             if fast_mode:
                                 time.sleep(1)
@@ -575,33 +622,41 @@ class MyThread(Thread):
                 finally: 
                     if self.user["defer"] == True:
                         try:
-                            browser.find_element_by_xpath("//span[contains(text(), 'CANCEL')]").click() 
+                            elem, f = find_elem(False, browser, browser, "//span[contains(text(), 'CANCEL')]")
+                            if f == False : raise Exception("Not found element")
+                            elem.click() 
                             time.sleep(2)
-                            browser.find_element_by_xpath("//span[contains(text(), 'Yes')]").click()
+                            elem, f = find_elem(False, browser, browser, "//span[contains(text(), 'Yes')]")
+                            if f == False : raise Exception("Not found element")
+                            elem.click() 
                             time.sleep(10)
                         except:
                             pass
                     else:
                         try:
-                            firstLevelMenu = browser.find_element_by_xpath("//body/div[1]/div/div[2]/div/div[1]/div/div[2]/span[1]/span[2]")
+                            firstLevelMenu, f = find_elem(False, browser, browser, "//body/div[1]/div/div[2]/div/div[1]/div/div[2]/span[1]/span[2]")
+                            if f == False : raise Exception("Not found element")
                             action.move_to_element(firstLevelMenu).perform()
                                 
                             if fast_mode:
                                 time.sleep(1)
                             else:
                                 time.sleep(2)
-
-                            secondLevelMenu = browser.find_element_by_xpath("//body/div[2]/div[2]/div/div/span[2]/span")
+                            secondLevelMenu, f = find_elem(False, browser, browser, "//body/div[2]/div[2]/div/div/span[2]/span")
+                            if f == False : raise Exception("Not found element")
+                            # secondLevelMenu = browser.find_element_by_xpath("//body/div[2]/div[2]/div/div/span[2]/span")
                             action.move_to_element(secondLevelMenu).perform() 
                             secondLevelMenu.click()
                             try:
-                                elem = browser.find_element_by_xpath("//body/div[2]/div[3]/div/div/div[3]/div/div/div/div[2]/div/div[1]/div/span/span")
+                                elem, f = find_elem(False, browser, browser, "//body/div[2]/div[3]/div/div/div[3]/div/div/div/div[2]/div/div[1]/div/span/span")
+                                if f == False : raise Exception("Not found element")
+                                # elem = browser.find_element_by_xpath("//body/div[2]/div[3]/div/div/div[3]/div/div/div/div[2]/div/div[1]/div/span/span")
                                 elem.click()
                             except:
                                 pass
                         except:
                             pass
-                        browser.save_screenshot("image_logs/" + self.user["name"] + time.strftime("-%Y-%m-%d-%H-%M-%S") +".png") 
+                        # browser.save_screenshot("image_logs/" + self.user["name"] + time.strftime("-%Y-%m-%d-%H-%M-%S") +".png") 
                         browser.close()
                         my_logging(self.log, self.name, proxies_list[proxy_index] + ': Failed.   Other Proxy will is started.') 
                         
