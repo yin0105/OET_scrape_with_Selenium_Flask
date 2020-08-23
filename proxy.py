@@ -381,8 +381,8 @@ class MyThread(Thread):
                                 date_2 = ddd.strftime('%d %b %Y').upper()
                                 print("date_2 = " + date_2)
                                 try:
-                                    select.select_by_visible_text(date_)
-                                    my_logging(self.log, self.name, 'Date: ' + date_) 
+                                    select.select_by_visible_text(date_2)
+                                    my_logging(self.log, self.name, 'Date: ' + date_2) 
                                     
                                     if fast_mode:
                                         pass
@@ -395,7 +395,7 @@ class MyThread(Thread):
                                         my_logging(self.log, self.name, proxies_list[proxy_index] + ': Browser is stopped by admin.')
                                         return
                                 except :#ElementNotVisibleException
-                                    my_logging(self.log, self.name, 'Date(' + date_ + ') not found')
+                                    my_logging(self.log, self.name, 'Date(' + date_2 + ') not found')
                                     if fast_mode:
                                         pass
                                     else:
@@ -504,7 +504,7 @@ class MyThread(Thread):
 
 
                                             sended = False
-                                            msg = msg.replace("%NAME", self.name).replace("%DATE", date_).replace("%LOCATION", location)
+                                            msg = msg.replace("%NAME", self.name).replace("%DATE", date_2).replace("%LOCATION", location)
                                             print(msg)
                                             ######## break ##############
                                             if proxy_status[self.name] == 0: 
